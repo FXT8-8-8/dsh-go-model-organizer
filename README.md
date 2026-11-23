@@ -35,3 +35,45 @@ dsh plugin --profile web add dsh-go-model-organizer
 ## 许可
 
 MIT
+
+## 发布与更新
+
+安装源是本仓库里的 `market-index.json`，市场按索引里的 `source.commit` 拉取固定提交，所以**仓库必须是 Public**。
+
+更新一个版本：
+
+```sh
+# 1. 改代码后提交
+git add -A && git commit -m "说明改了什么"
+
+# 2. 取出新提交并写进索引
+SHA=$(git rev-parse HEAD)
+python3 - "$SHA" <<'PY'
+import json,sys
+p='market-index.json'
+d=json.load(open(p))
+d['plugins'][0]['versions'][0]['commit' if False else 'source']['commit']=sys.argv[1]
+json.dump(d,open(p,'w'),ensure_ascii=False,indent=2); open(p,'a').write('\n')
+PY
+git add -A && git commit -m "锁定提交 $SHA"
+
+# 3. 推送
+git push
+```
+
+索引地址两种写法，按需要选：
+
+| 地址 | 特点 |
+|---|---|
+| `https://raw.githubusercontent.com/USER/REPO/main/market-index.json` | 立即生效，适合自用 |
+| `https://cdn.jsdelivr.net/gh/USER/REPO@main/market-index.json` | 有 CDN 缓存，更新可能滞后，速度快 |
+
+要立刻让已添加索引的人拿到新版，用 raw 地址，或把索引地址换成 `@<commit>` 固定版本。
+
+推送凭据目前明文写在 `.git/config` 的 remote 里（Personal Access Token，需 `repo` 权限）。token 过期后要重新生成并：
+
+```sh
+git remote set-url origin https://USER:新TOKEN@github.com/USER/REPO.git
+```
+
+版本号变更时同步改 `package.json` 与索引里的 `version`。
