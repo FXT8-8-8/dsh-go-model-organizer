@@ -52,7 +52,7 @@ python3 - "$SHA" <<'PY'
 import json,sys
 p='market-index.json'
 d=json.load(open(p))
-d['plugins'][0]['versions'][0]['commit' if False else 'source']['commit']=sys.argv[1]
+d['plugins'][0]['versions'][0]['source']['commit'] = sys.argv[1]
 json.dump(d,open(p,'w'),ensure_ascii=False,indent=2); open(p,'a').write('\n')
 PY
 git add -A && git commit -m "锁定提交 $SHA"
