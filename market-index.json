@@ -28,7 +28,7 @@
           "source": {
             "type": "git",
             "url": "https://github.com/fxt13730452907-arch/dsh-go-model-organizer",
-            "commit": "7fea868981912b1f64bc57bfe0e215a98b02eb04"
+            "commit": "17fecb409a07bdee581eb2b11044c16a30db2d7b"
           },
           "engines": {
             "dsh": ">=0.2.1-rc.2 <0.3.0-0"
