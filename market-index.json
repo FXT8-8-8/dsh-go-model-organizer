@@ -19,7 +19,7 @@
         "zh": "按渠道与五大类列出模型，支持通断测试、批量删除，并把报错一键翻成中文",
         "en": "Group models by provider and category, test reachability, delete in bulk, and translate errors"
       },
-      "author": "fxt13730452907-arch",
+      "author": "FXT8-8-8",
       "metadata": {},
       "versions": [
         {
@@ -27,7 +27,7 @@
           "publishTimestamp": 1795500000,
           "source": {
             "type": "git",
-            "url": "https://github.com/fxt13730452907-arch/dsh-go-model-organizer",
+            "url": "https://github.com/FXT8-8-8/dsh-go-model-organizer",
             "commit": "17fecb409a07bdee581eb2b11044c16a30db2d7b"
           },
           "engines": {
@@ -37,7 +37,7 @@
       ],
       "repository": {
         "type": "git",
-        "url": "https://github.com/fxt13730452907-arch/dsh-go-model-organizer"
+        "url": "https://github.com/FXT8-8-8/dsh-go-model-organizer"
       }
     }
   ]
