@@ -28,7 +28,7 @@
           "source": {
             "type": "git",
             "url": "https://github.com/FXT8-8-8/dsh-go-model-organizer",
-            "commit": "f1739407ea7f0de2acd1c9d3e6fbc7a4512daa73"
+            "commit": "8257f24ce4948e5407a0a73f955af07d53e909e1"
           },
           "engines": {
             "dsh": ">=0.2.1-rc.2 <0.3.0-0"
