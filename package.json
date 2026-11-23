@@ -1,0 +1,94 @@
+{
+  "name": "dsh-go-model-organizer",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "lib/index.js",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "dsh": ">=0.2.1-rc.2 <0.3.0-0"
+  },
+  "dshGo": {
+    "v": 1,
+    "title": {
+      "zh": "模型分类",
+      "en": "Model organizer"
+    },
+    "icon": "list",
+    "contributes": {
+      "composer.actions": [
+        {
+          "id": "open-models",
+          "label": {
+            "zh": "模型分类",
+            "en": "Models"
+          },
+          "icon": "list",
+          "effect": {
+            "type": "open",
+            "page": "panel:models"
+          }
+        }
+      ],
+      "panels": [
+        {
+          "id": "models",
+          "title": {
+            "zh": "模型分类",
+            "en": "Model organizer"
+          },
+          "icon": "list",
+          "placement": [
+            "session.tab",
+            "chat.panel",
+            "features"
+          ]
+        },
+        {
+          "id": "err",
+          "title": {
+            "zh": "错误翻译",
+            "en": "Error text"
+          },
+          "icon": "translate",
+          "placement": [
+            "session.tab",
+            "features"
+          ]
+        }
+      ],
+      "message.actions": [
+        {
+          "id": "translate-error",
+          "label": {
+            "zh": "翻译报错",
+            "en": "Err zh"
+          },
+          "icon": "translate"
+        }
+      ]
+    }
+  },
+  "description": "模型分类与错误翻译：按渠道/分类列出模型、通断测试、批量删除，报错一键翻译",
+  "keywords": [
+    "dsh-go",
+    "dsh-go-plugin",
+    "models",
+    "translate"
+  ],
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_NAME/dsh-go-model-organizer.git"
+  },
+  "homepage": "https://github.com/YOUR_NAME/dsh-go-model-organizer"
+}

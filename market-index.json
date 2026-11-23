@@ -1,0 +1,25 @@
+{
+  "format": 1,
+  "title": { "zh": "我的插件源", "en": "My plugin index" },
+  "description": { "zh": "个人自建 dsh-go 插件", "en": "Personal dsh-go plugins" },
+  "plugins": [
+    {
+      "name": "dsh-go-model-organizer",
+      "title": { "zh": "模型分类", "en": "Model organizer" },
+      "description": {
+        "zh": "按渠道与五大类列出模型，支持通断测试、批量删除，并把报错一键翻成中文",
+        "en": "Group models by provider and category, test reachability, delete in bulk, and translate errors"
+      },
+      "author": "YOUR_NAME",
+      "metadata": {},
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1795500000,
+          "source": { "type": "npm" },
+          "engines": { "dsh": ">=0.2.1-rc.2 <0.3.0-0" }
+        }
+      ]
+    }
+  ]
+}

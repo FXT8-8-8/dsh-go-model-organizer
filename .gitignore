@@ -1,0 +1,4 @@
+node_modules/
+*.log
+.thinking-cache.json
+*.tgz
