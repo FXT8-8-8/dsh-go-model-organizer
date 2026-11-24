@@ -32,6 +32,56 @@ dsh plugin --profile web add dsh-go-model-organizer
 - 删除模型、改默认模型都直接写引擎配置，删错了要去设置里加回来
 - 通断测试会真实调用接口，整批测试会消耗少量额度
 
+## 上架官方市场（ccch1mneyyy/dsh-go-market）
+
+市场只认 npm 上的精确版本，仓库本身只存一个 JSON 条目，不托管代码。
+
+### 1. 发 npm
+
+```sh
+npm publish --registry=https://registry.npmjs.org/ --access public
+```
+
+- 本机默认 registry 是 npmmirror，**必须显式带 `--registry`**，否则发不出去
+- token 要有「Read and write + All packages」；classic 的 **Automation** 类型最省事（自带 bypass 2FA）
+- 报 `Two-factor authentication or granular access token with bypass 2fa enabled is required` 就是 token 缺包权限或没勾 bypass，换 token，不要重试
+
+### 2. 提 PR
+
+在 `ccch1mneyyy/dsh-go-market` 的 `plugins/` 加一个 JSON：普通包 `<包名>.json`，`@scope/name` 写 `@scope__name.json`。一次 PR 只加或改一个条目，升级就改同一个文件的 `version`。
+
+```json
+{
+  "name": "dsh-go-model-organizer",
+  "version": "0.1.0",
+  "title": { "zh": "模型分类", "en": "Model organizer" },
+  "summary": { "zh": "…", "en": "…" },
+  "category": "tools",
+  "screenshots": [],
+  "homepage": "https://github.com/FXT8-8-8/dsh-go-model-organizer"
+}
+```
+
+`en` 必填；分类只能 `tools` `media` `productivity` `communication` `other`；不要写 `tier`、risk、integrity。
+
+### 3. auto-merge 那个坑（重要）
+
+`market/catalog` 会正常通过，但 `auto-merge` 作业必然失败：
+
+```
+GraphqlResponseError: Pull request is in unstable status
+```
+
+原因是它在自己那条检查还在 `in_progress` 时就去调 `enablePullRequestAutoMerge`，GitHub 判定 PR 状态不稳定，直接拒绝。而且失败的那条 `auto-merge` 检查本身又让 PR 一直停在 `unstable`，形成死循环。
+
+实测无效的补救：重开 PR、推空提交换 head、等 CodeRabbit 跑完再触发——都会再失败一次，只是多几条红叉。仓库里唯一合并成功的 #60 也是同样报错、由维护者手动合的。
+
+**结论**：`market/catalog` 绿了就别再折腾，去 PR 下留言请维护者手动 Squash and merge。合并后 `publish.yml` 每十分钟构建一次，App 插件页才搜得到。
+
+### 4. 权限提醒
+
+市场仓库属于 `ccch1mneyyy`。用 `FXT8-8-8` 的 token 查该仓库权限是 `push=false, admin=false`，看不到合并按钮是正常的，不是操作错了。
+
 ## 许可
 
 MIT
