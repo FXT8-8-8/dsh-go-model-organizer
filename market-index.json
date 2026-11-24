@@ -39,6 +39,37 @@
         "type": "git",
         "url": "https://github.com/FXT8-8-8/dsh-go-model-organizer"
       }
+    },
+    {
+      "name": "dsh-go-usage-panel",
+      "title": {
+        "zh": "用量",
+        "en": "Usage"
+      },
+      "description": {
+        "zh": "合并「用量」与「用量与费用」：本会话费用、预计下次请求上下文与分项、本对话累计、模型分项、峰谷与余额，输入框胶囊一点即开",
+        "en": "Merged usage panel: session cost, next-request context and breakdown, cumulative tokens, per-model rows, peak/off-peak and balance"
+      },
+      "author": "FXT8-8-8",
+      "metadata": {},
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1795499657,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/FXT8-8-8/dsh-go-usage-panel",
+            "commit": "a99bb3565685287f60ed16a9a25ecdc93121f894"
+          },
+          "engines": {
+            "dsh": ">=0.2.1-rc.2 <0.3.0-0"
+          }
+        }
+      ],
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/FXT8-8-8/dsh-go-usage-panel"
+      }
     }
   ]
 }
