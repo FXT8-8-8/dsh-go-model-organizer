@@ -12,8 +12,8 @@
     {
       "name": "dsh-go-model-organizer",
       "title": {
-        "zh": "模型分类",
-        "en": "Model organizer"
+        "zh": "模型管理",
+        "en": "Model manager"
       },
       "description": {
         "zh": "按渠道与五大类列出模型，支持通断测试、批量删除，并把报错一键翻成中文",
@@ -36,11 +36,11 @@
         },
         {
           "version": "0.1.3",
-          "publishTimestamp": 1795637669,
+          "publishTimestamp": 1795637757,
           "source": {
             "type": "git",
             "url": "https://github.com/FXT8-8-8/dsh-go-model-organizer",
-            "commit": "9a650a7ead28"
+            "commit": "b5fffc34827b"
           },
           "engines": {
             "dsh": ">=0.2.1-rc.2 <0.3.0-0"
