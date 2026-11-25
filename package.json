@@ -14,8 +14,8 @@
   "dshGo": {
     "v": 1,
     "title": {
-      "zh": "模型分类",
-      "en": "Model organizer"
+      "zh": "模型管理",
+      "en": "Model manager"
     },
     "icon": "list",
     "contributes": {
@@ -23,7 +23,7 @@
         {
           "id": "open-models",
           "label": {
-            "zh": "模型分类",
+            "zh": "模型管理",
             "en": "Models"
           },
           "icon": "list",
@@ -37,8 +37,8 @@
         {
           "id": "models",
           "title": {
-            "zh": "模型分类",
-            "en": "Model organizer"
+            "zh": "模型管理",
+            "en": "Model manager"
           },
           "icon": "list",
           "placement": [
@@ -72,7 +72,7 @@
       ]
     }
   },
-  "description": "模型分类与错误翻译：按渠道/分类列出模型、通断测试、批量删除，报错一键翻译",
+  "description": "模型管理与错误翻译：按渠道/分类列出模型、通断测试、批量删除，报错一键翻译",
   "keywords": [
     "dsh-go",
     "dsh-go-plugin",
