@@ -58,6 +58,17 @@
             "session.tab",
             "features"
           ]
+        },
+        {
+          "id": "sort",
+          "title": {
+            "zh": "模型排序",
+            "en": "Model order"
+          },
+          "icon": "list",
+          "placement": [
+            "features"
+          ]
         }
       ],
       "message.actions": [
