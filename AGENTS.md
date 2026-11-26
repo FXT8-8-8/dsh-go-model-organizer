@@ -14,6 +14,7 @@
 - 这个 App 的对话界面是 Flutter 原生界面，不是 Harness Web Client。改 App 自己的样子用 dsh-go-ui（ui.json）；给 App 加胶囊、菜单项、状态条、原生面板、工具卡这类功能用 dsh-go-plugin；只有用户明确要做 Cordis 插件、或要改 Harness 网页版 / 桌面端时，才用官方 cordis-plugin-development 等技能。
 - 没点名界面载体时，手机上的默认目标是 dsh-go 原生界面；先确定载体再选技能，不要按加载顺序决定。
 - dsh-go 原生插件不是 Cordis bundle：目录在 `$DSH_HOME/dsh-go/plugins/`，安装用 `dsh plugin --profile web add`；官方技能里的「工作区建包 + plugin_manager install_bundle」只用于 Cordis 插件，两套不要混用。
+- dsh-go 插件胶囊的顺序由 App 按插件 npm 包名字母序渲染，**无法通过 ui.json 的 `composer.quickActions`、`plugins.seats` 或 profile 的 bundles 顺序调整**；`plugins.seats` 只有 native/island/web/hidden 四种显示模式，不改排序。要改顺序只能改包名（需重装插件，风险高、不划算），否则接受现状，不要反复盲改配置。
 - 用户报障、排查问题、写 bug 反馈时加载 `dsh-go-support` 技能：它教你怎么读本机诊断、按症状定位、生成脱敏的 issue 草稿。
 
 ## 可视化回复（dsh-ui）
