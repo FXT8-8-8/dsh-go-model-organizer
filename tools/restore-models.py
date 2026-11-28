@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""按写前备份恢复 llm-pi-ai 的模型清单。
+"""按写前备份恢复模型渠道（llm-pi-ai 或动态发现的 providers 入口）的模型清单。
 
 用法:
   restore-models.py --list                         列出所有可用备份
@@ -9,14 +9,29 @@
 """
 import sys, os, glob, json, time, shutil, yaml
 
-CFG = '/root/.dsh/profiles/web/cordis.patch.yml'
+# 不写死本机路径：DSH_HOME 环境变量优先，缺省 ~/.dsh。
+# 配置 patch 文件在 <DSH_HOME>/profiles/web/cordis.patch.yml；备份在 <DSH_HOME>/dsh-go/backups。
+DSH_HOME = os.environ.get('DSH_HOME') or os.path.expanduser('~/.dsh')
+CFG = os.path.join(DSH_HOME, 'profiles', 'web', 'cordis.patch.yml')
+BACKUP_DIR = os.path.join(DSH_HOME, 'dsh-go', 'backups')
+# 官方插件包名 + 兜底 id；两者都匹配不到时找任何带 providers 配置的入口
+PLUGIN_NAMES = ['@deepseek-ai/dsh-llm-pi-ai']
 ENTRY = 'llm-pi-ai'
+
+def entry_matches(e):
+    if not isinstance(e, dict): return False
+    ident = e.get('id') or ''
+    name = e.get('name') or ''
+    if ident == ENTRY or name in PLUGIN_NAMES: return True
+    cfg = e.get('config')
+    if isinstance(cfg, dict) and isinstance(cfg.get('providers'), dict): return True
+    return False
 
 def candidates():
     out = []
-    out += glob.glob('/tmp/model-sync-backup-*.json')
-    out += glob.glob('/root/.dsh/dsh-go/backups/model-sync-*.json')
+    out += glob.glob(os.path.join(BACKUP_DIR, 'model-sync-*.json'))
     out += glob.glob(CFG + '.bak-*')
+    out += glob.glob('/tmp/model-sync-backup-*.json')   # 旧遗留也认
     return sorted(set(out), key=os.path.getmtime)
 
 def load_providers(path):
@@ -25,7 +40,7 @@ def load_providers(path):
         return d if isinstance(d, dict) else {}
     d = yaml.safe_load(open(path)) or []
     for e in d:
-        if e.get('id') == ENTRY:
+        if entry_matches(e):
             return (e.get('config') or {}).get('providers') or {}
     return {}
 
@@ -58,7 +73,7 @@ def do_diff(path):
 
 def load_providers_cur():
     for e in load_current_doc():
-        if e.get('id') == ENTRY:
+        if entry_matches(e):
             return (e.get('config') or {}).get('providers') or {}
     return {}
 
@@ -67,7 +82,7 @@ def do_restore(path, only_pid, apply):
     if not bak: sys.exit(f'备份里没有 {ENTRY} 的 providers：{path}')
     doc = load_current_doc(); target = None
     for e in doc:
-        if e.get('id') == ENTRY: target = e; break
+        if entry_matches(e): target = e; break
     if target is None: sys.exit(f'当前配置里找不到 {ENTRY}')
     cur = (target.get('config') or {}).get('providers') or {}
     plan = []
