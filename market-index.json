@@ -23,6 +23,18 @@
       "metadata": {},
       "versions": [
         {
+          "version": "0.1.7",
+          "publishTimestamp": 1795851818,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/FXT8-8-8/dsh-go-model-organizer",
+            "commit": "981adc4db0034d20b736a5bd8594a8dd2fc28398"
+          },
+          "engines": {
+            "dsh": ">=0.2.1-rc.2 <0.3.0-0"
+          }
+        },
+        {
           "version": "0.1.6",
           "publishTimestamp": 1795850661,
           "source": {
@@ -96,5 +108,5 @@
       }
     }
   ],
-  "version": "0.1.6"
+  "version": "0.1.7"
 }
