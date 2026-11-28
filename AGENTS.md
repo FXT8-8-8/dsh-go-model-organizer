@@ -11,7 +11,7 @@
 
 - 你运行在 Android 手机上的 Ubuntu 24.04 环境里（proot，免 Root）。这里没有可用的沙箱后端（bubblewrap / Landlock 都不可用），`workspace-write` 沙箱模式一定会被拒绝。
 - 需要执行 bash 命令时，直接用 `sandbox_permissions: "danger-full-access"` 申请运行，并用一句话写明理由；不要先试沙箱模式。
-- 默认工作目录是 `/root/workspace`。用户已授权访问手机存储：手机内部存储挂载在 `/sdcard`（`/root/手机存储` 是它的快捷方式；相册在 `/sdcard/DCIM`，下载在 `/sdcard/Download`）。改动或删除用户文件前先说明并确认；给用户的产出文件放到 `/sdcard/Download/DSH-Go/`。
+- 默认工作目录是 `/sdcard/Download/DSH-Go/`（即 `/storage/emulated/0/Download/DSH-Go/`，同一目录）。**所有项目文件（源码、样本、反编译中间产物、构建产物、交付物）强制只在这里产生**；`/root/workspace` 仅作工具与一次性临时中转（`tools/`、OCR 临时文件），禁止在它下面新建或存放项目目录。用户已授权访问手机存储：`/sdcard`（`/root/手机存储` 是快捷方式；相册在 `/sdcard/DCIM`，下载在 `/sdcard/Download`）。改动或删除用户文件前先说明并确认。
 
 - 已预装 node / npm / pnpm、python3 / pip、git；npm 和 pnpm 默认用国内镜像 registry.npmmirror.com。缺别的工具可以 `apt-get update && apt-get install -y <包名>`（需要联网）。
 - 手机屏幕小：回复尽量简洁，代码块不要太宽；用用户使用的语言回答。
@@ -239,7 +239,7 @@ modern（libxposed）通道的三条硬约束，实测得出：
 
 九、文件与产物管理
 
-1. 产物根目录固定 `/sdcard/Download/DSH-Go/`，每个项目一个中文应用名目录，内含 `安装包/`、`文档/`、`分析数据/`。
+1. **所有项目文件强制落在 `/sdcard/Download/DSH-Go/`**（= `/storage/emulated/0/Download/DSH-Go/`）：源码、样本、反编译中间产物、构建产物、交付物一律进对应项目目录，不得写入 `/root/workspace` 或引擎私有目录（防止再涨到 10G）。每个项目一个中文应用名目录，内含 `安装包/`、`文档/`、`分析数据/`。
 2. 编译依赖统一放 `工具与归档/编译依赖/`；一次性诊断与历史产物放 `工具与归档/历史归档/`；两者都不进项目目录。
 3. build.sh 必须 `. "$(dirname "$0")/../tools/paths.sh"` 后用 `OUTDIR=$(PROJ_OUT 应用名)` 取路径；禁止硬编码 `/sdcard/Download`，改路径只改 `paths.sh`。`/sdcard` 不支持软链，禁止用链接做路径兼容。
 4. 新项目并入前先定中文目录名；同一应用的新旧版本共用同一目录，不新建目录。
@@ -269,6 +269,14 @@ modern（libxposed）通道的三条硬约束，实测得出：
 - 直接代管：读写代码、提交推送、建删仓库、管项目，不用再问 token
 - 每次生成或修改规则后，都要询问用户是否将最新的 `/root/.dsh/AGENTS.md` 上传到 GitHub；用户确认后再上传
 - 任何文件上传到 GitHub 或其他云端并核验成功后，立即删除本机为上传生成的规则备份、压缩包、暂存目录和临时副本，只保留原始文件，不留上传缓存占用空间；`/root/.dsh/AGENTS.md` 原件始终保留
+
+## 项目位置（已迁移）
+
+- 所有项目已按规则九迁至 `/sdcard/Download/DSH-Go/`，`/root/workspace` 不再存放项目目录。
+- OurPlay VIP（Xposed 模块，包名 com.yg.ourplayvip）项目位置：`/sdcard/Download/DSH-Go/OurPlayVIP/工程源码/`。其 `build.sh` 的 `BASE` 已同步改为该路径。构建：`sh /sdcard/Download/DSH-Go/OurPlayVIP/工程源码/build.sh`。
+- **文件存放分类标准【强制】**：
+  - **工具/服务类**（长期使用、运行中依赖、带自身数据）：留在 `/root/workspace` 或系统路径，如 `tools/`、`model-gateway`（OpenAI 兼容模型网关服务，含 gateway.db 账号数据）。
+  - **项目类**（做完可删、一次性交付、逆向/构建产物）：强制放 `/sdcard/Download/DSH-Go/<应用名>/`，交付后即可清理，不留 workspace。
 
 ## dsh-go 插件
 
